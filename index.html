@@ -121,6 +121,144 @@
       color: var(--gold-light);
     }
 
+    /* Setup Required / Token Entry Modal */
+    .setup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10,10,18,0.95);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+    }
+
+    .setup-overlay.hidden {
+      display: none;
+    }
+
+    .setup-modal {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 32px 24px;
+      max-width: 480px;
+      width: 100%;
+      border: 1px solid rgba(212,175,55,0.2);
+      text-align: center;
+    }
+
+    .setup-modal h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      color: var(--gold);
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .setup-modal p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .setup-modal ol {
+      text-align: left;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin: 20px 0;
+      padding-left: 24px;
+    }
+
+    .setup-modal li {
+      margin-bottom: 8px;
+    }
+
+    .setup-modal code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--gold-light);
+    }
+
+    .setup-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: 'Inter', monospace;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .setup-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .setup-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .setup-btn {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--bg-primary);
+      border: none;
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .setup-btn:active {
+      transform: scale(0.98);
+    }
+
+    .security-warning {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .security-warning h4 {
+      color: #f87171;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .security-warning p {
+      font-size: 0.85rem;
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .security-warning ul {
+      margin-top: 8px;
+      padding-left: 20px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .security-warning li {
+      margin-bottom: 4px;
+    }
+
     /* Config Section */
     .config-section {
       margin: 16px 16px 24px;
@@ -188,6 +326,65 @@
       background: rgba(212,175,55,0.1);
       color: var(--gold);
       border: 1px solid rgba(212,175,55,0.2);
+    }
+
+    .token-source-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .token-source-badge.url {
+      background: rgba(34,197,94,0.15);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+
+    .token-source-badge.storage {
+      background: rgba(212,175,55,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+
+    .token-source-badge.manual {
+      background: rgba(96,165,250,0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(96,165,250,0.3);
+    }
+
+    .url-bookmark-help {
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    .url-bookmark-help h4 {
+      color: var(--success);
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    .url-bookmark-help p {
+      color: var(--text-secondary);
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .url-bookmark-help code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: var(--gold-light);
+      word-break: break-all;
     }
 
     .config-section details {
@@ -599,7 +796,38 @@
   
   <div class="toast-container" id="toastContainer"></div>
   
-  <div class="container">
+  <!-- Setup Required Modal (shown when no token) -->
+  <div class="setup-overlay hidden" id="setupOverlay">
+    <div class="setup-modal">
+      <h2>🔐 Setup Required</h2>
+      <p>To track your menu picks across devices, you need to authenticate with a GitHub Personal Access Token.</p>
+      
+      <ol>
+        <li>Go to GitHub → Settings → Developer settings → <strong>Personal access tokens → Fine-grained tokens</strong></li>
+        <li>Generate a new token with access to your <code>recovery-kitchen</code> repo</li>
+        <li>Set <strong>Contents</strong> permission to <code>Read and write</code></li>
+        <li>Copy your token (starts with <code>ghp_</code>)</li>
+      </ol>
+      
+      <input type="password" class="setup-input" id="setupTokenInput" placeholder="Paste your GitHub token here (ghp_...)">
+      <button class="setup-btn" onclick="saveTokenFromSetup()">Save & Continue</button>
+      
+      <div class="security-warning">
+        <h4>⚠️ Security Notice</h4>
+        <p>For easier multi-device setup, you can bookmark this URL with your token:</p>
+        <code style="display: block; margin: 8px 0; word-break: break-all; font-size: 0.75rem;">https://omarclaw1420.github.io/recovery-kitchen/?token=ghp_YOUR_TOKEN</code>
+        <ul>
+          <li>⚠️ <strong>Never share this bookmarked URL</strong> — it contains your token</li>
+          <li>⚠️ Token will be visible in browser history and potentially screenshots</li>
+          <li>✅ Use a fine-grained PAT with minimal permissions (contents: read+write only)</li>
+          <li>✅ Token is automatically removed from visible URL after loading</li>
+          <li>✅ If compromised, revoke the token in GitHub and generate a new one</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="appContainer">
     <header>
       <div class="header-content">
         <span class="plate-icon">🍽️</span>
@@ -614,10 +842,19 @@
     <!-- Configuration Section -->
     <div class="config-section">
       <h3>🔐 GitHub Tracking Setup</h3>
+      <div id="tokenSourceBadge"></div>
       <input type="password" class="config-input" id="githubToken" placeholder="Paste your GitHub fine-grained PAT here" oninput="saveToken()">
       <input type="text" class="config-input" id="repoOwner" placeholder="Repository owner (default: omarclaw1420)" oninput="saveToken()">
       <input type="text" class="config-input" id="repoName" placeholder="Repository name (default: recovery-kitchen)" oninput="saveToken()">
       <div class="config-status" id="configStatus"></div>
+      
+      <div class="url-bookmark-help" id="urlBookmarkHelp" style="display: none;">
+        <h4>🔗 URL-Based Setup (Recommended for Multi-Device)</h4>
+        <p>Create a bookmark with your token in the URL for instant setup on new devices:</p>
+        <code id="bookmarkUrlExample"></code>
+        <p style="margin-top: 8px;">⚠️ <strong>Keep this URL private</strong> — it contains your authentication token.</p>
+      </div>
+      
       <details>
         <summary>How to set up tracking</summary>
         <ul>
@@ -628,6 +865,18 @@
           <li>Also set <strong>Metadata</strong> → <code>Read</code> (required)</li>
           <li>Generate and copy the token here</li>
           <li><strong>Important:</strong> The <code>data/menu-log.json</code> file will be created automatically on first use</li>
+        </ul>
+      </details>
+      
+      <details style="margin-top: 8px;">
+        <summary>🔒 Security & Privacy</summary>
+        <ul>
+          <li>Your token is stored only in your browser's localStorage (never on our servers)</li>
+          <li>When using URL-based setup, the token is automatically removed from the visible URL after loading</li>
+          <li>However, the original URL with token remains in browser history</li>
+          <li>Use a fine-grained PAT limited to just this repository</li>
+          <li>If you share screenshots, make sure the URL bar isn't visible</li>
+          <li>Rotate your token periodically (every 90 days recommended)</li>
         </ul>
       </details>
     </div>
@@ -925,16 +1174,212 @@
     const DEFAULT_REPO = 'recovery-kitchen';
     const FILE_PATH = 'data/menu-log.json';
     const BRANCH = 'main';
+    const TOKEN_KEY = 'github_pat';
+    const TOKEN_SOURCE_KEY = 'github_pat_source';
+    
+    // ============================================
+    // URL TOKEN HANDLING
+    // ============================================
+    
+    /**
+     * Extracts a query parameter value from the current URL
+     */
+    function getUrlParameter(paramName) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(paramName);
+    }
+    
+    /**
+     * Validates GitHub token format (basic check)
+     */
+    function isValidTokenFormat(token) {
+      return token && typeof token === 'string' && token.startsWith('ghp_');
+    }
+    
+    /**
+     * Saves token to localStorage
+     */
+    function saveTokenToStorage(token, source = 'manual') {
+      if (!isValidTokenFormat(token)) {
+        console.error('Invalid token format - must start with ghp_');
+        return false;
+      }
+      localStorage.setItem(TOKEN_KEY, token);
+      localStorage.setItem(TOKEN_SOURCE_KEY, source);
+      console.log(`Token saved from ${source}`);
+      return true;
+    }
+    
+    /**
+     * Retrieves the stored token
+     */
+    function getStoredToken() {
+      return localStorage.getItem(TOKEN_KEY);
+    }
+    
+    /**
+     * Gets the token source (url, storage, manual)
+     */
+    function getTokenSource() {
+      return localStorage.getItem(TOKEN_SOURCE_KEY) || 'unknown';
+    }
+    
+    /**
+     * Clears the stored token
+     */
+    function clearStoredToken() {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(TOKEN_SOURCE_KEY);
+    }
+    
+    /**
+     * Removes the token from the URL for cleaner UX
+     * Note: Original URL with token is still in browser history
+     */
+    function cleanUrl() {
+      const url = new URL(window.location.href);
+      const hadToken = url.searchParams.has('token');
+      url.searchParams.delete('token');
+      window.history.replaceState({}, document.title, url.toString());
+      return hadToken;
+    }
+    
+    /**
+     * Initialize token handling on page load
+     * Priority: URL token > stored token > show setup
+     */
+    function initializeToken() {
+      // Check URL for token parameter
+      const urlToken = getUrlParameter('token');
+      
+      if (urlToken && isValidTokenFormat(urlToken)) {
+        // New token provided via URL - save it
+        const saved = saveTokenToStorage(urlToken, 'url');
+        if (saved) {
+          // Remove token from URL for cleaner look
+          cleanUrl();
+          showToast('Token loaded from URL and saved', 'success');
+        }
+        return { token: urlToken, source: 'url' };
+      }
+      
+      // No token in URL - check localStorage
+      const storedToken = getStoredToken();
+      
+      if (storedToken && isValidTokenFormat(storedToken)) {
+        console.log('Using token from localStorage');
+        return { token: storedToken, source: 'storage' };
+      }
+      
+      // No token found anywhere
+      console.log('No token found - setup required');
+      return { token: null, source: null };
+    }
+    
+    /**
+     * Shows the setup modal when no token exists
+     */
+    function showSetupRequired() {
+      document.getElementById('setupOverlay').classList.remove('hidden');
+      document.getElementById('appContainer').style.filter = 'blur(5px)';
+    }
+    
+    /**
+     * Hides the setup modal
+     */
+    function hideSetupRequired() {
+      document.getElementById('setupOverlay').classList.add('hidden');
+      document.getElementById('appContainer').style.filter = 'none';
+    }
+    
+    /**
+     * Saves token from the setup modal
+     */
+    function saveTokenFromSetup() {
+      const token = document.getElementById('setupTokenInput').value.trim();
+      
+      if (!token) {
+        showToast('Please enter a token', 'error');
+        return;
+      }
+      
+      if (!isValidTokenFormat(token)) {
+        showToast('Invalid token format - must start with ghp_', 'error');
+        return;
+      }
+      
+      saveTokenToStorage(token, 'manual');
+      document.getElementById('githubToken').value = token;
+      updateTokenSourceBadge('manual');
+      hideSetupRequired();
+      showToast('Token saved! You can now track activities.', 'success');
+      updateBookmarkHelp(token);
+    }
+    
+    /**
+     * Updates the token source badge in the config section
+     */
+    function updateTokenSourceBadge(source) {
+      const badge = document.getElementById('tokenSourceBadge');
+      if (!source) {
+        badge.innerHTML = '';
+        return;
+      }
+      
+      const labels = {
+        'url': { text: '✅ Token loaded from URL', class: 'url' },
+        'storage': { text: '📦 Token from storage', class: 'storage' },
+        'manual': { text: '✏️ Token entered manually', class: 'manual' }
+      };
+      
+      const config = labels[source] || labels['manual'];
+      badge.innerHTML = `<div class="token-source-badge ${config.class}">${config.text}</div>`;
+    }
+    
+    /**
+     * Updates the bookmark help section with example URL
+     */
+    function updateBookmarkHelp(token) {
+      if (!token) return;
+      
+      const helpSection = document.getElementById('urlBookmarkHelp');
+      const exampleCode = document.getElementById('bookmarkUrlExample');
+      
+      // Mask most of the token for display
+      const maskedToken = token.substring(0, 8) + '...' + token.substring(token.length - 4);
+      const exampleUrl = `https://omarclaw1420.github.io/recovery-kitchen/?token=${maskedToken}`;
+      
+      exampleCode.textContent = exampleUrl;
+      helpSection.style.display = 'block';
+    }
+    
+    // ============================================
+    // APP INITIALIZATION
+    // ============================================
     
     // Load saved config on startup
     document.addEventListener('DOMContentLoaded', () => {
-      const savedToken = localStorage.getItem('github_pat');
+      // Initialize token from URL or storage
+      const { token, source } = initializeToken();
+      
+      // Load other saved config
       const savedOwner = localStorage.getItem('repo_owner');
       const savedRepo = localStorage.getItem('repo_name');
       
-      if (savedToken) {
-        document.getElementById('githubToken').value = savedToken;
+      if (token) {
+        document.getElementById('githubToken').value = token;
+        updateTokenSourceBadge(source);
+        updateBookmarkHelp(token);
+        
+        // Show appropriate message based on source
+        if (source === 'storage') {
+          showToast('Token loaded from local storage', 'success');
+        }
+      } else {
+        // No token - show setup modal
+        showSetupRequired();
       }
+      
       if (savedOwner) {
         document.getElementById('repoOwner').value = savedOwner;
       }
@@ -942,11 +1387,15 @@
         document.getElementById('repoName').value = savedRepo;
       }
       
-      if (savedToken) {
-        showToast('Token loaded from local storage', 'success');
-      }
       updateProgress();
+      
+      // Try to sync queued entries on page load
+      retryQueuedEntries();
     });
+    
+    // ============================================
+    // CONFIGURATION HANDLING
+    // ============================================
     
     // Save config to localStorage
     function saveToken() {
@@ -955,9 +1404,16 @@
       const repo = document.getElementById('repoName').value.trim();
       
       if (token) {
-        localStorage.setItem('github_pat', token);
+        const currentStored = getStoredToken();
+        if (token !== currentStored) {
+          saveTokenToStorage(token, 'manual');
+          updateTokenSourceBadge('manual');
+          updateBookmarkHelp(token);
+        }
       } else {
-        localStorage.removeItem('github_pat');
+        clearStoredToken();
+        updateTokenSourceBadge(null);
+        document.getElementById('urlBookmarkHelp').style.display = 'none';
       }
       
       if (owner) {
@@ -976,11 +1432,15 @@
     // Get config values
     function getConfig() {
       return {
-        token: localStorage.getItem('github_pat'),
+        token: getStoredToken(),
         owner: localStorage.getItem('repo_owner') || DEFAULT_OWNER,
         repo: localStorage.getItem('repo_name') || DEFAULT_REPO
       };
     }
+    
+    // ============================================
+    // UI HELPERS
+    // ============================================
     
     // Show toast notification
     function showToast(message, type = 'info') {
@@ -1017,6 +1477,10 @@
       const section = header.parentElement;
       section.classList.toggle('expanded');
     }
+    
+    // ============================================
+    // GITHUB API
+    // ============================================
     
     // Append entry to JSON file in GitHub repo
     async function appendToJsonFile(newEntry) {
@@ -1090,6 +1554,14 @@
       
       if (!putResponse.ok) {
         const error = await putResponse.json();
+        
+        // Handle 401 - token invalid
+        if (putResponse.status === 401) {
+          clearStoredToken();
+          showSetupRequired();
+          throw new Error('Invalid token - please re-authenticate. Your token may have expired or been revoked.');
+        }
+        
         throw new Error(error.message || `Failed to commit: ${putResponse.status}`);
       }
       
@@ -1109,6 +1581,7 @@
       // If no token, just do local tracking
       if (!token) {
         showToast('Activity selected locally (no GitHub token)', 'info');
+        showSetupRequired();
         return;
       }
       
@@ -1203,7 +1676,10 @@
       document.getElementById('progressBar').style.width = percentage + '%';
     }
     
-    // Random picker data
+    // ============================================
+    // RANDOM PICKER
+    // ============================================
+    
     const allItems = [
       { emoji: '🚶', title: 'Small Walk', desc: 'Step outside. No destination needed. 5 minutes of fresh air untangles your brain.', section: 'appetizers', category: 'Appetizer' },
       { emoji: '🧹', title: 'Organize Your Lab', desc: 'Move one thing to its place. Just one. Suddenly the chaos feels beatable.', section: 'appetizers', category: 'Appetizer' },
@@ -1283,9 +1759,6 @@
         queueForRetry(entry);
       }
     }
-    
-    // Try to sync queued entries on page load
-    retryQueuedEntries();
   </script>
 </body>
 </html>
