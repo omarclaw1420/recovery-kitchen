@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0f0f1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>🍽️ Omar's Recovery Kitchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg-primary: #0a0a12;
+      --bg-secondary: #12121e;
+      --bg-card: rgba(255,255,255,0.03);
+      --gold: #d4af37;
+      --gold-light: #f0d878;
+      --text-primary: #f5f5f5;
+      --text-secondary: #a0a0b0;
+      --appetizer: #7dd3c0;
+      --main: #f87171;
+      --dessert: #f9a8d4;
+      --special: #fcd34d;
+      --rescue: #fb923c;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    
+    /* Hero Section */
+    header {
+      text-align: center;
+      padding: 60px 24px 40px;
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(212,175,55,0.08) 0%, transparent 60%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .plate-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    
+    .tagline {
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+    
+    .instruction-card {
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+    
+    .instruction-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    .instruction-card strong {
+      color: var(--gold-light);
+    }
+    
+    /* Menu Sections */
+    .menu-section {
+      margin: 8px 16px 24px;
+      border-radius: 20px;
+      background: var(--bg-secondary);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .menu-section:active {
+      transform: scale(0.995);
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s ease;
+    }
+    
+    .section-header:active {
+      background: rgba(255,255,255,0.02);
+    }
+    
+    .section-icon {
+      font-size: 2.5rem;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .appetizers .section-icon { background: rgba(125,211,192,0.15); }
+    .mains .section-icon { background: rgba(248,113,113,0.15); }
+    .desserts .section-icon { background: rgba(249,168,212,0.15); }
+    .specials .section-icon { background: rgba(252,211,77,0.15); }
+    .rescue .section-icon { background: rgba(251,146,60,0.15); }
+    
+    .section-title {
+      flex: 1;
+    }
+    
+    .section-title h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .appetizers .section-title h2 { color: var(--appetizer); }
+    .mains .section-title h2 { color: var(--main); }
+    .desserts .section-title h2 { color: var(--dessert); }
+    .specials .section-title h2 { color: var(--special); }
+    .rescue .section-title h2 { color: var(--rescue); }
+    
+    .section-title p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    
+    .chevron {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      transition: transform 0.3s ease;
+    }
+    
+    .menu-section.expanded .chevron {
+      transform: rotate(180deg);
+    }
+    
+    .section-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+    }
+    
+    .menu-section.expanded .section-content {
+      max-height: 2000px;
+    }
+    
+    .items-container {
+      padding: 0 16px 16px;
+    }
+    
+    /* Menu Items */
+    .menu-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      margin: 8px 0;
+      background: var(--bg-card);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .menu-item:active {
+      transform: scale(0.98);
+      background: rgba(255,255,255,0.06);
+    }
+    
+    .menu-item.selected {
+      background: rgba(212,175,55,0.1);
+      border-color: rgba(212,175,55,0.3);
+    }
+    
+    .item-emoji {
+      font-size: 1.8rem;
+      min-width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+    }
+    
+    .item-content {
+      flex: 1;
+    }
+    
+    .item-content h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .item-tagline {
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-style: italic;
+    }
+    
+    .item-content p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .desserts .item-content h3 {
+      color: var(--dessert);
+    }
+    
+    .warning {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #f87171;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: rgba(248,113,113,0.1);
+      border-radius: 8px;
+    }
+    
+    .check-indicator {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: transparent;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    
+    .menu-item.selected .check-indicator {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg-primary);
+    }
+    
+    /* Random Picker Button */
+    .picker-section {
+      padding: 24px 16px;
+      text-align: center;
+    }
+    
+    .random-btn {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--bg-primary);
+      border: none;
+      padding: 16px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .random-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 10px rgba(212,175,55,0.2);
+    }
+    
+    .result-card {
+      margin-top: 20px;
+      padding: 20px;
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      border: 1px solid rgba(212,175,55,0.2);
+      display: none;
+      animation: slideUp 0.3s ease;
+    }
+    
+    .result-card.show {
+      display: block;
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result-emoji {
+      font-size: 3rem;
+      margin-bottom: 8px;
+    }
+    
+    .result-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    
+    .result-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-secondary);
+    }
+    
+    footer p {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    
+    .footer-quote {
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1rem;
+    }
+    
+    /* Progress indicator */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      width: 0%;
+      transition: width 0.3s ease;
+      z-index: 100;
+    }
+    
+    /* Responsive adjustments */
+    @media (min-width: 600px) {
+      header { padding: 80px 24px 50px; }
+      header h1 { font-size: 2.5rem; }
+      .menu-section { margin: 12px 24px 32px; }
+    }
+    
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+  
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <span class="plate-icon">🍽️</span>
+        <h1>Omar's Recovery Kitchen</h1>
+        <p class="tagline">A menu for when you're stuck, scrolling, or just... blah.</p>
+        <div class="instruction-card">
+          <p><strong>How to use:</strong> Pick anything. Seriously. The goal isn't perfection — it's movement. Even a bad choice beats no choice.</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Random Picker -->
+    <div class="picker-section">
+      <button class="random-btn" onclick="pickRandom()">
+        🎲 Surprise Me
+      </button>
+      <div class="result-card" id="resultCard">
+        <div class="result-emoji" id="resultEmoji">🎯</div>
+        <div class="result-title" id="resultTitle">Your Pick</div>
+        <div class="result-desc" id="resultDesc">Description here</div>
+      </div>
+    </div>
+
+    <!-- APPETIZERS -->
+    <section class="menu-section appetizers expanded" data-section="appetizers">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-icon">🥗</span>
+        <div class="section-title">
+          <h2>Appetizers</h2>
+          <p>Light bites to wake you up (5–15 min)</p>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="items-container">
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🚶</span>
+            <div class="item-content">
+              <h3>Small Walk <span class="item-tagline">— The Reset Button</span></h3>
+              <p>Step outside. No destination needed. 5 minutes of fresh air untangles your brain. Your back will thank you.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🧹</span>
+            <div class="item-content">
+              <h3>Organize Your Lab <span class="item-tagline">— Tangible Progress</span></h3>
+              <p>Move one thing to its place. Just one. Suddenly the chaos feels beatable.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">☕</span>
+            <div class="item-content">
+              <h3>Morning Milk / Evening Tea <span class="item-tagline">— The Ritual</span></h3>
+              <p>Warmth in a cup. Morning = fuel. Night = wind-down. Either way, you're caring for yourself.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🤸</span>
+            <div class="item-content">
+              <h3>Morning Exercises <span class="item-tagline">— Wake the Body</span></h3>
+              <p>10 jumping jacks. A stretch. Your blood remembers how to move — remind it.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🚿</span>
+            <div class="item-content">
+              <h3>Quick Shower <span class="item-tagline">— The Hard Reset</span></h3>
+              <p>Water washes away more than dirt. Step in stale, step out new.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🛏️</span>
+            <div class="item-content">
+              <h3>Make Your Bed <span class="item-tagline">— 2-Minute Victory</span></h3>
+              <p>The room instantly looks 40% better. You've already won today.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN COURSES -->
+    <section class="menu-section mains" data-section="mains">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-icon">🍖</span>
+        <div class="section-title">
+          <h2>Main Courses</h2>
+          <p>The "I actually did something" meals (30+ min)</p>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="items-container">
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🛠️</span>
+            <div class="item-content">
+              <h3>Work on a Project <span class="item-tagline">— Build the Future</span></h3>
+              <p>That thing you keep thinking about? 30 minutes on it. Future-you will be grateful.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">📚</span>
+            <div class="item-content">
+              <h3>Learn Something New <span class="item-tagline">— Expand</span></h3>
+              <p>A chapter. A tutorial. A video that teaches instead of entertains. You grow when you learn.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">✅</span>
+            <div class="item-content">
+              <h3>Crush Pending Chores <span class="item-tagline">— Clear the Decks</span></h3>
+              <p>That list weighing on you? Pick three. Do them. The relief is instant.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🏆</span>
+            <div class="item-content">
+              <h3>Finish Something <span class="item-tagline">— The Closure</span></h3>
+              <p>That anime episode. That game level. That book chapter. Complete it. Achievement unlocked.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">👥</span>
+            <div class="item-content">
+              <h3>Hangout with Friends <span class="item-tagline">— Refuel</span></h3>
+              <p>Energy isn't just about doing — it's about connecting. Text someone. Make plans. Be human together.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESSERTS -->
+    <section class="menu-section desserts" data-section="desserts">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-icon">🍰</span>
+        <div class="section-title">
+          <h2>Desserts</h2>
+          <p>The trap foods — delicious, but they steal your day</p>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="items-container">
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">📱</span>
+            <div class="item-content">
+              <h3>Social Media Reels <span class="item-tagline">— The Time Thief</span></h3>
+              <p>"Just 5 minutes" becomes 2 hours. You feel hollow after. The algorithm wins.</p>
+              <span class="warning">⚠️ Skip it</span>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">♟️</span>
+            <div class="item-content">
+              <h3>Chess <span class="item-tagline">— The Siren</span></h3>
+              <p>"One quick game" — suddenly it's midnight. Your real work is still waiting.</p>
+              <span class="warning">⚠️ Lock the app if you must</span>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🎵</span>
+            <div class="item-content">
+              <h3>Listening to Haram <span class="item-tagline">— The Guilt Loop</span></h3>
+              <p>You know how this ends. Temporary pleasure, lasting regret.</p>
+              <span class="warning">⚠️ Protect your peace</span>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🍔</span>
+            <div class="item-content">
+              <h3>Unhealthy Eating <span class="item-tagline">— The Crash</span></h3>
+              <p>10 minutes of taste, hours of sluggishness. Days of regret.</p>
+              <span class="warning">⚠️ Your body is a long-term investment</span>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">📺</span>
+            <div class="item-content">
+              <h3>YouTube Rabbit Holes <span class="item-tagline">— The Void</span></h3>
+              <p>"How did I get here?" 47 videos later, you know everything about submarine history and nothing about your goals.</p>
+              <span class="warning">⚠️ Close the tab</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHEF'S SPECIALS -->
+    <section class="menu-section specials" data-section="specials">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-icon">🌟</span>
+        <div class="section-title">
+          <h2>Chef's Specials</h2>
+          <p>Not for everyday — but when you need the fire</p>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="items-container">
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">💪</span>
+            <div class="item-content">
+              <h3>Go to the Gym <span class="item-tagline">— The Commitment</span></h3>
+              <p>2 hours. Intensity. Sweat. You won't want to go. You'll be glad you did. <strong style="color: var(--gold);">This is the difference between average and alive.</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESCUE MODE -->
+    <section class="menu-section rescue" data-section="rescue">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-icon">🚨</span>
+        <div class="section-title">
+          <h2>Rescue Mode</h2>
+          <p>When nothing else works — nuclear options</p>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="items-container">
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🛡️</span>
+            <div class="item-content">
+              <h3>Phone in Another Room</h3>
+              <p>Can't stop scrolling? Remove the temptation.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">🚪</span>
+            <div class="item-content">
+              <h3>Leave the House</h3>
+              <p>Cabin fever? Change your environment immediately.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">📱</span>
+            <div class="item-content">
+              <h3>Text a Friend</h3>
+              <p>Need pressure? "Hold me accountable." Say it. Mean it.</p>
+            </div>
+          </div>
+          
+          <div class="menu-item" onclick="toggleItem(this)">
+            <span class="check-indicator">✓</span>
+            <span class="item-emoji">⏱️</span>
+            <div class="item-content">
+              <h3>5-Minute Timer</h3>
+              <p>Paralyzed? Pick ANY appetizer. Timer starts now. Go.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="footer-quote">"Pick anything. The goal isn't perfection — it's movement."</p>
+      <p>Last updated: February 2026</p>
+    </footer>
+  </div>
+
+  <script>
+    // Toggle section collapse
+    function toggleSection(header) {
+      const section = header.parentElement;
+      section.classList.toggle('expanded');
+    }
+    
+    // Toggle item selection
+    function toggleItem(item) {
+      item.classList.toggle('selected');
+      updateProgress();
+    }
+    
+    // Update progress bar
+    function updateProgress() {
+      const total = document.querySelectorAll('.menu-item').length;
+      const selected = document.querySelectorAll('.menu-item.selected').length;
+      const percentage = (selected / total) * 100;
+      document.getElementById('progressBar').style.width = percentage + '%';
+    }
+    
+    // Random picker
+    const allItems = [
+      { emoji: '🚶', title: 'Small Walk', desc: 'Step outside. No destination needed. 5 minutes of fresh air untangles your brain.', section: 'appetizers' },
+      { emoji: '🧹', title: 'Organize Your Lab', desc: 'Move one thing to its place. Just one. Suddenly the chaos feels beatable.', section: 'appetizers' },
+      { emoji: '☕', title: 'Morning Milk / Evening Tea', desc: 'Warmth in a cup. Morning = fuel. Night = wind-down. Either way, you\'re caring for yourself.', section: 'appetizers' },
+      { emoji: '🤸', title: 'Morning Exercises', desc: '10 jumping jacks. A stretch. Your blood remembers how to move — remind it.', section: 'appetizers' },
+      { emoji: '🚿', title: 'Quick Shower', desc: 'Water washes away more than dirt. Step in stale, step out new.', section: 'appetizers' },
+      { emoji: '🛏️', title: 'Make Your Bed', desc: 'The room instantly looks 40% better. You\'ve already won today.', section: 'appetizers' },
+      { emoji: '🛠️', title: 'Work on a Project', desc: 'That thing you keep thinking about? 30 minutes on it. Future-you will be grateful.', section: 'mains' },
+      { emoji: '📚', title: 'Learn Something New', desc: 'A chapter. A tutorial. A video that teaches instead of entertains. You grow when you learn.', section: 'mains' },
+      { emoji: '✅', title: 'Crush Pending Chores', desc: 'That list weighing on you? Pick three. Do them. The relief is instant.', section: 'mains' },
+      { emoji: '🏆', title: 'Finish Something', desc: 'That anime episode. That game level. That book chapter. Complete it. Achievement unlocked.', section: 'mains' },
+      { emoji: '👥', title: 'Hangout with Friends', desc: 'Energy isn\'t just about doing — it\'s about connecting. Text someone. Make plans.', section: 'mains' },
+      { emoji: '💪', title: 'Go to the Gym', desc: '2 hours. Intensity. Sweat. You won\'t want to go. You\'ll be glad you did.', section: 'specials' }
+    ];
+    
+    function pickRandom() {
+      const resultCard = document.getElementById('resultCard');
+      const resultEmoji = document.getElementById('resultEmoji');
+      const resultTitle = document.getElementById('resultTitle');
+      const resultDesc = document.getElementById('resultDesc');
+      
+      // Animation effect
+      let count = 0;
+      const interval = setInterval(() => {
+        const random = allItems[Math.floor(Math.random() * allItems.length)];
+        resultEmoji.textContent = random.emoji;
+        resultTitle.textContent = random.title;
+        count++;
+        if (count > 10) {
+          clearInterval(interval);
+          resultDesc.textContent = random.desc;
+          resultCard.classList.add('show');
+          
+          // Scroll to result
+          resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }, 100);
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProgress();
+    });
+  </script>
+</body>
+</html>
