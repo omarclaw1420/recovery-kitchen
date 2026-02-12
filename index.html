@@ -26,6 +26,8 @@
       --dessert: #f9a8d4;
       --special: #fcd34d;
       --rescue: #fb923c;
+      --success: #22c55e;
+      --error: #ef4444;
     }
     
     body {
@@ -117,6 +119,148 @@
     
     .instruction-card strong {
       color: var(--gold-light);
+    }
+
+    /* Config Section */
+    .config-section {
+      margin: 16px 16px 24px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .config-section h3 {
+      font-size: 0.9rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .config-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: 'Inter', monospace;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    .config-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .config-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .config-status {
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .config-status.show {
+      display: block;
+    }
+
+    .config-status.success {
+      background: rgba(34,197,94,0.1);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.2);
+    }
+
+    .config-status.error {
+      background: rgba(239,68,68,0.1);
+      color: var(--error);
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+
+    .config-status.pending {
+      background: rgba(212,175,55,0.1);
+      color: var(--gold);
+      border: 1px solid rgba(212,175,55,0.2);
+    }
+
+    .config-section details {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .config-section summary {
+      cursor: pointer;
+      color: var(--gold);
+    }
+
+    .config-section details ul {
+      margin-top: 8px;
+      padding-left: 20px;
+    }
+
+    .config-section details li {
+      margin-bottom: 4px;
+    }
+
+    .config-section code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .toast {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      animation: slideUp 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .toast.success {
+      background: rgba(34,197,94,0.95);
+      color: #fff;
+    }
+
+    .toast.error {
+      background: rgba(239,68,68,0.95);
+      color: #fff;
+    }
+
+    .toast.info {
+      background: rgba(212,175,55,0.95);
+      color: #000;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px) translateX(-50%); }
+      to { opacity: 1; transform: translateY(0) translateX(-50%); }
     }
     
     /* Menu Sections */
@@ -223,6 +367,34 @@
       transition: all 0.2s ease;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+
+    .menu-item.sending {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .menu-item.sending::after {
+      content: '📝';
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: pulse-emoji 1s ease-in-out infinite;
+    }
+
+    .menu-item.tracked::after {
+      content: '✅';
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @keyframes pulse-emoji {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
     
     .menu-item:active {
@@ -258,6 +430,7 @@
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
+      padding-right: 28px;
     }
     
     .item-tagline {
@@ -345,14 +518,14 @@
       border-radius: 16px;
       border: 1px solid rgba(212,175,55,0.2);
       display: none;
-      animation: slideUp 0.3s ease;
+      animation: slideUpResult 0.3s ease;
     }
     
     .result-card.show {
       display: block;
     }
     
-    @keyframes slideUp {
+    @keyframes slideUpResult {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
@@ -409,6 +582,7 @@
       header { padding: 80px 24px 50px; }
       header h1 { font-size: 2.5rem; }
       .menu-section { margin: 12px 24px 32px; }
+      .config-section { margin: 16px 24px 24px; }
     }
     
     /* Accessibility */
@@ -423,6 +597,8 @@
 <body>
   <div class="progress-bar" id="progressBar"></div>
   
+  <div class="toast-container" id="toastContainer"></div>
+  
   <div class="container">
     <header>
       <div class="header-content">
@@ -430,10 +606,31 @@
         <h1>Omar's Recovery Kitchen</h1>
         <p class="tagline">A menu for when you're stuck, scrolling, or just... blah.</p>
         <div class="instruction-card">
-          <p><strong>How to use:</strong> Pick anything. Seriously. The goal isn't perfection — it's movement. Even a bad choice beats no choice.</p>
+          <p><strong>How to use:</strong> Pick anything. Seriously. The goal isn't perfection — it's movement. Even a bad choice beats no choice. Tap items to track your activity!</p>
         </div>
       </div>
     </header>
+
+    <!-- Configuration Section -->
+    <div class="config-section">
+      <h3>🔐 GitHub Tracking Setup</h3>
+      <input type="password" class="config-input" id="githubToken" placeholder="Paste your GitHub fine-grained PAT here" oninput="saveToken()">
+      <input type="text" class="config-input" id="repoOwner" placeholder="Repository owner (default: omarclaw1420)" oninput="saveToken()">
+      <input type="text" class="config-input" id="repoName" placeholder="Repository name (default: recovery-kitchen)" oninput="saveToken()">
+      <div class="config-status" id="configStatus"></div>
+      <details>
+        <summary>How to set up tracking</summary>
+        <ul>
+          <li>Go to GitHub → Settings → Developer settings → Personal access tokens → <strong>Fine-grained tokens</strong></li>
+          <li>Click "Generate new token"</li>
+          <li>Set <strong>Repository access</strong> to your <code>recovery-kitchen</code> repo only</li>
+          <li>Set <strong>Permissions</strong> → <strong>Contents</strong> → <code>Read and write</code></li>
+          <li>Also set <strong>Metadata</strong> → <code>Read</code> (required)</li>
+          <li>Generate and copy the token here</li>
+          <li><strong>Important:</strong> The <code>data/menu-log.json</code> file will be created automatically on first use</li>
+        </ul>
+      </details>
+    </div>
 
     <!-- Random Picker -->
     <div class="picker-section">
@@ -448,7 +645,7 @@
     </div>
 
     <!-- APPETIZERS -->
-    <section class="menu-section appetizers expanded" data-section="appetizers">
+    <section class="menu-section appetizers expanded" data-section="appetizers" data-category="Appetizer">
       <div class="section-header" onclick="toggleSection(this)">
         <span class="section-icon">🥗</span>
         <div class="section-title">
@@ -459,7 +656,7 @@
       </div>
       <div class="section-content">
         <div class="items-container">
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Small Walk')" data-emoji="🚶">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🚶</span>
             <div class="item-content">
@@ -468,7 +665,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Organize Your Lab')" data-emoji="🧹">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🧹</span>
             <div class="item-content">
@@ -477,7 +674,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Morning Milk / Evening Tea')" data-emoji="☕">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">☕</span>
             <div class="item-content">
@@ -486,7 +683,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Morning Exercises')" data-emoji="🤸">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🤸</span>
             <div class="item-content">
@@ -495,7 +692,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Quick Shower')" data-emoji="🚿">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🚿</span>
             <div class="item-content">
@@ -504,7 +701,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Make Your Bed')" data-emoji="🛏️">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🛏️</span>
             <div class="item-content">
@@ -517,7 +714,7 @@
     </section>
 
     <!-- MAIN COURSES -->
-    <section class="menu-section mains" data-section="mains">
+    <section class="menu-section mains" data-section="mains" data-category="Main">
       <div class="section-header" onclick="toggleSection(this)">
         <span class="section-icon">🍖</span>
         <div class="section-title">
@@ -528,7 +725,7 @@
       </div>
       <div class="section-content">
         <div class="items-container">
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Work on a Project')" data-emoji="🛠️">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🛠️</span>
             <div class="item-content">
@@ -537,7 +734,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Learn Something New')" data-emoji="📚">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">📚</span>
             <div class="item-content">
@@ -546,7 +743,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Crush Pending Chores')" data-emoji="✅">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">✅</span>
             <div class="item-content">
@@ -555,7 +752,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Finish Something')" data-emoji="🏆">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🏆</span>
             <div class="item-content">
@@ -564,7 +761,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Hangout with Friends')" data-emoji="👥">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">👥</span>
             <div class="item-content">
@@ -577,7 +774,7 @@
     </section>
 
     <!-- DESSERTS -->
-    <section class="menu-section desserts" data-section="desserts">
+    <section class="menu-section desserts" data-section="desserts" data-category="Dessert">
       <div class="section-header" onclick="toggleSection(this)">
         <span class="section-icon">🍰</span>
         <div class="section-title">
@@ -588,7 +785,7 @@
       </div>
       <div class="section-content">
         <div class="items-container">
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Social Media Reels')" data-emoji="📱">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">📱</span>
             <div class="item-content">
@@ -598,7 +795,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Chess')" data-emoji="♟️">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">♟️</span>
             <div class="item-content">
@@ -608,7 +805,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Listening to Haram')" data-emoji="🎵">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🎵</span>
             <div class="item-content">
@@ -618,7 +815,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Unhealthy Eating')" data-emoji="🍔">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🍔</span>
             <div class="item-content">
@@ -628,7 +825,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'YouTube Rabbit Holes')" data-emoji="📺">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">📺</span>
             <div class="item-content">
@@ -642,7 +839,7 @@
     </section>
 
     <!-- CHEF'S SPECIALS -->
-    <section class="menu-section specials" data-section="specials">
+    <section class="menu-section specials" data-section="specials" data-category="Special">
       <div class="section-header" onclick="toggleSection(this)">
         <span class="section-icon">🌟</span>
         <div class="section-title">
@@ -653,7 +850,7 @@
       </div>
       <div class="section-content">
         <div class="items-container">
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Go to the Gym')" data-emoji="💪">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">💪</span>
             <div class="item-content">
@@ -666,7 +863,7 @@
     </section>
 
     <!-- RESCUE MODE -->
-    <section class="menu-section rescue" data-section="rescue">
+    <section class="menu-section rescue" data-section="rescue" data-category="Rescue">
       <div class="section-header" onclick="toggleSection(this)">
         <span class="section-icon">🚨</span>
         <div class="section-title">
@@ -677,7 +874,7 @@
       </div>
       <div class="section-content">
         <div class="items-container">
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Phone in Another Room')" data-emoji="🛡️">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🛡️</span>
             <div class="item-content">
@@ -686,7 +883,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Leave the House')" data-emoji="🚪">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">🚪</span>
             <div class="item-content">
@@ -695,7 +892,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, 'Text a Friend')" data-emoji="📱">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">📱</span>
             <div class="item-content">
@@ -704,7 +901,7 @@
             </div>
           </div>
           
-          <div class="menu-item" onclick="toggleItem(this)">
+          <div class="menu-item" onclick="trackActivity(this, '5-Minute Timer')" data-emoji="⏱️">
             <span class="check-indicator">✓</span>
             <span class="item-emoji">⏱️</span>
             <div class="item-content">
@@ -723,16 +920,279 @@
   </div>
 
   <script>
+    // GitHub Configuration
+    const DEFAULT_OWNER = 'omarclaw1420';
+    const DEFAULT_REPO = 'recovery-kitchen';
+    const FILE_PATH = 'data/menu-log.json';
+    const BRANCH = 'main';
+    
+    // Load saved config on startup
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedToken = localStorage.getItem('github_pat');
+      const savedOwner = localStorage.getItem('repo_owner');
+      const savedRepo = localStorage.getItem('repo_name');
+      
+      if (savedToken) {
+        document.getElementById('githubToken').value = savedToken;
+      }
+      if (savedOwner) {
+        document.getElementById('repoOwner').value = savedOwner;
+      }
+      if (savedRepo) {
+        document.getElementById('repoName').value = savedRepo;
+      }
+      
+      if (savedToken) {
+        showToast('Token loaded from local storage', 'success');
+      }
+      updateProgress();
+    });
+    
+    // Save config to localStorage
+    function saveToken() {
+      const token = document.getElementById('githubToken').value.trim();
+      const owner = document.getElementById('repoOwner').value.trim();
+      const repo = document.getElementById('repoName').value.trim();
+      
+      if (token) {
+        localStorage.setItem('github_pat', token);
+      } else {
+        localStorage.removeItem('github_pat');
+      }
+      
+      if (owner) {
+        localStorage.setItem('repo_owner', owner);
+      } else {
+        localStorage.removeItem('repo_owner');
+      }
+      
+      if (repo) {
+        localStorage.setItem('repo_name', repo);
+      } else {
+        localStorage.removeItem('repo_name');
+      }
+    }
+    
+    // Get config values
+    function getConfig() {
+      return {
+        token: localStorage.getItem('github_pat'),
+        owner: localStorage.getItem('repo_owner') || DEFAULT_OWNER,
+        repo: localStorage.getItem('repo_name') || DEFAULT_REPO
+      };
+    }
+    
+    // Show toast notification
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+      toast.innerHTML = `${icon} ${message}`;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+    
+    // Show config status
+    function showStatus(message, type) {
+      const status = document.getElementById('configStatus');
+      status.textContent = message;
+      status.className = 'config-status show ' + type;
+      if (type === 'success') {
+        setTimeout(() => {
+          status.classList.remove('show');
+        }, 3000);
+      }
+    }
+    
     // Toggle section collapse
     function toggleSection(header) {
       const section = header.parentElement;
       section.classList.toggle('expanded');
     }
     
-    // Toggle item selection
-    function toggleItem(item) {
+    // Append entry to JSON file in GitHub repo
+    async function appendToJsonFile(newEntry) {
+      const { token, owner, repo } = getConfig();
+      
+      if (!token) {
+        throw new Error('No GitHub token configured');
+      }
+      
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${FILE_PATH}`;
+      
+      // Step 1: Fetch existing file
+      let entries = [];
+      let sha = null;
+      
+      try {
+        const getResponse = await fetch(apiUrl, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+        
+        if (getResponse.status === 200) {
+          const fileData = await getResponse.json();
+          sha = fileData.sha;
+          const content = atob(fileData.content);
+          entries = JSON.parse(content);
+          if (!Array.isArray(entries)) {
+            entries = [];
+          }
+        } else if (getResponse.status === 404) {
+          // File doesn't exist yet, start with empty array
+          entries = [];
+        } else {
+          const error = await getResponse.json();
+          throw new Error(error.message || `Failed to fetch file: ${getResponse.status}`);
+        }
+      } catch (error) {
+        if (error.message.includes('404')) {
+          // File doesn't exist, start fresh
+          entries = [];
+        } else {
+          throw error;
+        }
+      }
+      
+      // Step 2: Append new entry
+      entries.push(newEntry);
+      
+      // Step 3: Commit updated file
+      const updateBody = {
+        message: `Add menu pick: ${newEntry.activity} [${newEntry.category}]`,
+        content: btoa(JSON.stringify(entries, null, 2)),
+        branch: BRANCH
+      };
+      
+      if (sha) {
+        updateBody.sha = sha;
+      }
+      
+      const putResponse = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updateBody)
+      });
+      
+      if (!putResponse.ok) {
+        const error = await putResponse.json();
+        throw new Error(error.message || `Failed to commit: ${putResponse.status}`);
+      }
+      
+      return await putResponse.json();
+    }
+    
+    // Track activity when menu item is clicked
+    async function trackActivity(item, activityName) {
+      const { token } = getConfig();
+      const section = item.closest('.menu-section');
+      const category = section.dataset.category || 'Unknown';
+      
+      // Toggle visual selection
       item.classList.toggle('selected');
       updateProgress();
+      
+      // If no token, just do local tracking
+      if (!token) {
+        showToast('Activity selected locally (no GitHub token)', 'info');
+        return;
+      }
+      
+      // Prevent double-clicks while sending
+      if (item.classList.contains('sending')) {
+        return;
+      }
+      
+      // Only track to GitHub when selecting (not deselecting)
+      if (!item.classList.contains('selected')) {
+        return;
+      }
+      
+      // Mark as sending
+      item.classList.add('sending');
+      
+      // Create entry
+      const now = new Date();
+      const entry = {
+        activity: activityName,
+        category: category,
+        timestamp: now.toISOString(),
+        localTime: now.toLocaleString('en-US', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZoneName: 'short'
+        })
+      };
+      
+      try {
+        await appendToJsonFile(entry);
+        
+        // Mark as tracked
+        item.classList.remove('sending');
+        item.classList.add('tracked');
+        showToast(`Tracked: ${activityName}`, 'success');
+        
+      } catch (error) {
+        item.classList.remove('sending');
+        console.error('Failed to log menu pick:', error);
+        showToast(`Failed: ${error.message}`, 'error');
+        
+        // Queue for retry (stored in localStorage)
+        queueForRetry(entry);
+      }
+    }
+    
+    // Queue entry for retry
+    function queueForRetry(entry) {
+      const queue = JSON.parse(localStorage.getItem('menu-queue') || '[]');
+      queue.push({ ...entry, queuedAt: new Date().toISOString() });
+      localStorage.setItem('menu-queue', JSON.stringify(queue));
+      showToast('Saved locally, will retry later', 'info');
+    }
+    
+    // Retry queued entries
+    async function retryQueuedEntries() {
+      const queue = JSON.parse(localStorage.getItem('menu-queue') || '[]');
+      if (queue.length === 0) return;
+      
+      const { token } = getConfig();
+      if (!token) return;
+      
+      const newQueue = [];
+      let successCount = 0;
+      
+      for (const entry of queue) {
+        try {
+          await appendToJsonFile(entry);
+          successCount++;
+        } catch (error) {
+          newQueue.push(entry);
+        }
+      }
+      
+      localStorage.setItem('menu-queue', JSON.stringify(newQueue));
+      
+      if (successCount > 0) {
+        showToast(`Synced ${successCount} queued entries`, 'success');
+      }
     }
     
     // Update progress bar
@@ -743,20 +1203,20 @@
       document.getElementById('progressBar').style.width = percentage + '%';
     }
     
-    // Random picker
+    // Random picker data
     const allItems = [
-      { emoji: '🚶', title: 'Small Walk', desc: 'Step outside. No destination needed. 5 minutes of fresh air untangles your brain.', section: 'appetizers' },
-      { emoji: '🧹', title: 'Organize Your Lab', desc: 'Move one thing to its place. Just one. Suddenly the chaos feels beatable.', section: 'appetizers' },
-      { emoji: '☕', title: 'Morning Milk / Evening Tea', desc: 'Warmth in a cup. Morning = fuel. Night = wind-down. Either way, you\'re caring for yourself.', section: 'appetizers' },
-      { emoji: '🤸', title: 'Morning Exercises', desc: '10 jumping jacks. A stretch. Your blood remembers how to move — remind it.', section: 'appetizers' },
-      { emoji: '🚿', title: 'Quick Shower', desc: 'Water washes away more than dirt. Step in stale, step out new.', section: 'appetizers' },
-      { emoji: '🛏️', title: 'Make Your Bed', desc: 'The room instantly looks 40% better. You\'ve already won today.', section: 'appetizers' },
-      { emoji: '🛠️', title: 'Work on a Project', desc: 'That thing you keep thinking about? 30 minutes on it. Future-you will be grateful.', section: 'mains' },
-      { emoji: '📚', title: 'Learn Something New', desc: 'A chapter. A tutorial. A video that teaches instead of entertains. You grow when you learn.', section: 'mains' },
-      { emoji: '✅', title: 'Crush Pending Chores', desc: 'That list weighing on you? Pick three. Do them. The relief is instant.', section: 'mains' },
-      { emoji: '🏆', title: 'Finish Something', desc: 'That anime episode. That game level. That book chapter. Complete it. Achievement unlocked.', section: 'mains' },
-      { emoji: '👥', title: 'Hangout with Friends', desc: 'Energy isn\'t just about doing — it\'s about connecting. Text someone. Make plans.', section: 'mains' },
-      { emoji: '💪', title: 'Go to the Gym', desc: '2 hours. Intensity. Sweat. You won\'t want to go. You\'ll be glad you did.', section: 'specials' }
+      { emoji: '🚶', title: 'Small Walk', desc: 'Step outside. No destination needed. 5 minutes of fresh air untangles your brain.', section: 'appetizers', category: 'Appetizer' },
+      { emoji: '🧹', title: 'Organize Your Lab', desc: 'Move one thing to its place. Just one. Suddenly the chaos feels beatable.', section: 'appetizers', category: 'Appetizer' },
+      { emoji: '☕', title: 'Morning Milk / Evening Tea', desc: 'Warmth in a cup. Morning = fuel. Night = wind-down. Either way, you\'re caring for yourself.', section: 'appetizers', category: 'Appetizer' },
+      { emoji: '🤸', title: 'Morning Exercises', desc: '10 jumping jacks. A stretch. Your blood remembers how to move — remind it.', section: 'appetizers', category: 'Appetizer' },
+      { emoji: '🚿', title: 'Quick Shower', desc: 'Water washes away more than dirt. Step in stale, step out new.', section: 'appetizers', category: 'Appetizer' },
+      { emoji: '🛏️', title: 'Make Your Bed', desc: 'The room instantly looks 40% better. You\'ve already won today.', section: 'appetizers', category: 'Appetizer' },
+      { emoji: '🛠️', title: 'Work on a Project', desc: 'That thing you keep thinking about? 30 minutes on it. Future-you will be grateful.', section: 'mains', category: 'Main' },
+      { emoji: '📚', title: 'Learn Something New', desc: 'A chapter. A tutorial. A video that teaches instead of entertains. You grow when you learn.', section: 'mains', category: 'Main' },
+      { emoji: '✅', title: 'Crush Pending Chores', desc: 'That list weighing on you? Pick three. Do them. The relief is instant.', section: 'mains', category: 'Main' },
+      { emoji: '🏆', title: 'Finish Something', desc: 'That anime episode. That game level. That book chapter. Complete it. Achievement unlocked.', section: 'mains', category: 'Main' },
+      { emoji: '👥', title: 'Hangout with Friends', desc: 'Energy isn\'t just about doing — it\'s about connecting. Text someone. Make plans.', section: 'mains', category: 'Main' },
+      { emoji: '💪', title: 'Go to the Gym', desc: '2 hours. Intensity. Sweat. You won\'t want to go. You\'ll be glad you did.', section: 'specials', category: 'Special' }
     ];
     
     function pickRandom() {
@@ -765,28 +1225,67 @@
       const resultTitle = document.getElementById('resultTitle');
       const resultDesc = document.getElementById('resultDesc');
       
+      let selectedItem = null;
+      
       // Animation effect
       let count = 0;
       const interval = setInterval(() => {
-        const random = allItems[Math.floor(Math.random() * allItems.length)];
-        resultEmoji.textContent = random.emoji;
-        resultTitle.textContent = random.title;
+        selectedItem = allItems[Math.floor(Math.random() * allItems.length)];
+        resultEmoji.textContent = selectedItem.emoji;
+        resultTitle.textContent = selectedItem.title;
         count++;
         if (count > 10) {
           clearInterval(interval);
-          resultDesc.textContent = random.desc;
+          resultDesc.textContent = selectedItem.desc;
           resultCard.classList.add('show');
           
           // Scroll to result
           resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          
+          // Auto-track the random pick
+          setTimeout(() => {
+            trackRandomPick(selectedItem);
+          }, 500);
         }
       }, 100);
     }
     
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      updateProgress();
-    });
+    async function trackRandomPick(item) {
+      const { token } = getConfig();
+      if (!token) {
+        showToast('Set up GitHub token to track activities', 'info');
+        return;
+      }
+      
+      const now = new Date();
+      const entry = {
+        activity: item.title,
+        category: item.category,
+        timestamp: now.toISOString(),
+        localTime: now.toLocaleString('en-US', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZoneName: 'short'
+        }),
+        source: 'random-picker'
+      };
+      
+      try {
+        await appendToJsonFile(entry);
+        showToast(`Tracked: ${item.title}`, 'success');
+      } catch (error) {
+        console.error('Failed to track random pick:', error);
+        showToast(`Failed to track: ${error.message}`, 'error');
+        queueForRetry(entry);
+      }
+    }
+    
+    // Try to sync queued entries on page load
+    retryQueuedEntries();
   </script>
 </body>
 </html>
