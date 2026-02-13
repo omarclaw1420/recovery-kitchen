@@ -659,6 +659,117 @@
       background: rgba(248,113,113,0.1);
       border-radius: 8px;
     }
+
+    /* Suggestions Integration Styles */
+    .suggestions {
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(212, 175, 55, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 10px;
+    }
+
+    .suggestion-header {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .suggestion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .suggestion-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(212, 175, 55, 0.3);
+    }
+
+    .suggestion-item.urgent {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .suggestion-item.urgent:hover {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    .suggestion-item.low {
+      opacity: 0.8;
+    }
+
+    .suggestion-item.dream {
+      background: rgba(147, 51, 234, 0.08);
+      border-color: rgba(147, 51, 234, 0.2);
+    }
+
+    .suggestion-emoji {
+      font-size: 1rem;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .suggestion-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .suggestion-time {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: auto;
+    }
+
+    .suggestion-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* Project-specific styling */
+    .project-suggestions .suggestion-item.urgent .suggestion-name {
+      color: #f87171;
+      font-weight: 600;
+    }
+
+    .chore-suggestions .suggestion-time {
+      font-family: 'Inter', monospace;
+      font-size: 0.7rem;
+    }
+
+    /* Walk suggestions - horizontal layout on larger screens */
+    @media (min-width: 400px) {
+      .walk-suggestions .suggestion-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      
+      .walk-suggestions .suggestion-item {
+        flex: 1;
+        min-width: 140px;
+      }
+    }
     
     .check-indicator {
       width: 24px;
@@ -911,6 +1022,21 @@
             <div class="item-content">
               <h3>Small Walk <span class="item-tagline">— The Reset Button</span></h3>
               <p>Step outside. No destination needed. 5 minutes of fresh air untangles your brain. Your back will thank you.</p>
+              <div class="suggestions walk-suggestions">
+                <div class="suggestion-header">🎯 Combine with errands:</div>
+                <div class="suggestion-list">
+                  <span class="suggestion-item">
+                    <span class="suggestion-emoji">👕</span>
+                    <span class="suggestion-name">Get laundry</span>
+                    <span class="suggestion-time">15-30 min</span>
+                  </span>
+                  <span class="suggestion-item">
+                    <span class="suggestion-emoji">📅</span>
+                    <span class="suggestion-name">Book annual check</span>
+                    <span class="suggestion-time">5-10 min</span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           
@@ -920,6 +1046,21 @@
             <div class="item-content">
               <h3>Organize Your Lab <span class="item-tagline">— Tangible Progress</span></h3>
               <p>Move one thing to its place. Just one. Suddenly the chaos feels beatable.</p>
+              <div class="suggestions lab-suggestions">
+                <div class="suggestion-header">💡 Perfect for:</div>
+                <div class="suggestion-list">
+                  <span class="suggestion-item urgent">
+                    <span class="suggestion-emoji">🔥</span>
+                    <span class="suggestion-name">PlantPro</span>
+                    <span class="suggestion-meta">— prep area for device testing</span>
+                  </span>
+                  <span class="suggestion-item">
+                    <span class="suggestion-emoji">🚗</span>
+                    <span class="suggestion-name">Change oil</span>
+                    <span class="suggestion-meta">— garage/lab space prep</span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           
@@ -980,6 +1121,31 @@
             <div class="item-content">
               <h3>Work on a Project <span class="item-tagline">— Build the Future</span></h3>
               <p>That thing you keep thinking about? 30 minutes on it. Future-you will be grateful.</p>
+              <div class="suggestions project-suggestions">
+                <div class="suggestion-header">🎯 Active Projects:</div>
+                <div class="suggestion-list">
+                  <span class="suggestion-item urgent">
+                    <span class="suggestion-emoji">🔥</span>
+                    <span class="suggestion-name">PlantPro</span>
+                    <span class="suggestion-meta">— milestone today, testing phase</span>
+                  </span>
+                  <span class="suggestion-item low">
+                    <span class="suggestion-emoji">💡</span>
+                    <span class="suggestion-name">Smart Switch</span>
+                    <span class="suggestion-meta">— simple, low priority</span>
+                  </span>
+                  <span class="suggestion-item medium">
+                    <span class="suggestion-emoji">📍</span>
+                    <span class="suggestion-name">Car/Bag Tracker</span>
+                    <span class="suggestion-meta">— medium priority</span>
+                  </span>
+                  <span class="suggestion-item dream">
+                    <span class="suggestion-emoji">🤖</span>
+                    <span class="suggestion-name">Little Assistant</span>
+                    <span class="suggestion-meta">— dream project</span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           
@@ -998,6 +1164,31 @@
             <div class="item-content">
               <h3>Crush Pending Chores <span class="item-tagline">— Clear the Decks</span></h3>
               <p>That list weighing on you? Pick three. Do them. The relief is instant.</p>
+              <div class="suggestions chore-suggestions">
+                <div class="suggestion-header">📋 Pending Chores:</div>
+                <div class="suggestion-list">
+                  <span class="suggestion-item">
+                    <span class="suggestion-emoji">🚗</span>
+                    <span class="suggestion-name">Change oil</span>
+                    <span class="suggestion-time">30-60 min</span>
+                  </span>
+                  <span class="suggestion-item">
+                    <span class="suggestion-emoji">🪒</span>
+                    <span class="suggestion-name">Shave</span>
+                    <span class="suggestion-time">10-15 min</span>
+                  </span>
+                  <span class="suggestion-item">
+                    <span class="suggestion-emoji">📅</span>
+                    <span class="suggestion-name">Book annual check for Cherokee</span>
+                    <span class="suggestion-time">5-10 min</span>
+                  </span>
+                  <span class="suggestion-item">
+                    <span class="suggestion-emoji">👕</span>
+                    <span class="suggestion-name">Get laundry</span>
+                    <span class="suggestion-time">15-30 min</span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           
